@@ -1,0 +1,61 @@
+{{- /*
+  把站点配置注入成 CSS 变量。
+
+  第 1 层(主题自身颜色):accent / accentDark —— 覆盖 theme.css 里的字面量。
+  第 2 层(配色方案):每个方案注入 --up-light / --up-dark / --down-light / --down-dark,
+  由 theme.css 按当前外观取用。方案名与配色方案切换器共用同一份配置。
+
+  这个 partial 必须在 <head> 里、主题样式表之后,这样注入的值覆盖主题默认值。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $colors := $theme.colors | default dict -}}
+{{- $schemes := $theme.schemes | default dict -}}
+{{- if or $colors $schemes -}}
+<style>
+  {{- with $colors.accent }}
+  :root {
+    --accent: {{ . }};
+    --accent-ink: color-mix(in oklab, {{ . }} 88%, black);
+    --accent-soft: color-mix(in srgb, {{ . }} 8%, transparent);
+    --accent-softer: color-mix(in srgb, {{ . }} 5%, transparent);
+  }
+  {{- end }}
+  {{- if $colors.accentDark }}
+  [data-theme="dark"] {
+    --accent: {{ $colors.accentDark }};
+    --accent-ink: color-mix(in oklab, {{ $colors.accentDark }} 88%, white);
+    --accent-soft: color-mix(in srgb, {{ $colors.accentDark }} 12%, transparent);
+    --accent-softer: color-mix(in srgb, {{ $colors.accentDark }} 6%, transparent);
+  }
+  {{- else if $colors.accent }}
+  [data-theme="dark"] {
+    --accent: color-mix(in oklab, {{ $colors.accent }} 78%, white);
+    --accent-ink: color-mix(in oklab, {{ $colors.accent }} 78%, white);
+    --accent-soft: color-mix(in srgb, {{ $colors.accent }} 12%, transparent);
+    --accent-softer: color-mix(in srgb, {{ $colors.accent }} 6%, transparent);
+  }
+  {{- end }}
+  {{- range $name, $scheme := $schemes }}
+  {{- $up := $scheme.up -}}
+  {{- $down := $scheme.down -}}
+  {{- $upLight := $up }}{{ $upDark := $up -}}
+  {{- if reflect.IsSlice $up -}}
+    {{- $upLight = index $up 0 -}}
+    {{- if gt (len $up) 1 }}{{ $upDark = index $up 1 }}{{ end -}}
+  {{- end -}}
+  {{- $downLight := $down }}{{ $downDark := $down -}}
+  {{- if reflect.IsSlice $down -}}
+    {{- $downLight = index $down 0 -}}
+    {{- if gt (len $down) 1 }}{{ $downDark = index $down 1 }}{{ end -}}
+  {{- end -}}
+  {{- if or $upLight $downLight }}
+  [data-scheme="{{ $name }}"] {
+    --up-light: {{ $upLight }};
+    --up-dark: {{ $upDark }};
+    --down-light: {{ $downLight }};
+    --down-dark: {{ $downDark }};
+  }
+  {{- end }}
+  {{- end }}
+</style>
+{{- end -}}

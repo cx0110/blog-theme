@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="site-main-inner">
+  <div class="error-page">
+    <div class="error-page-inner">
+      <div class="error-code">404</div>
+      <h1 class="error-title">{{ i18n "notFoundTitle" | default "This page does not exist" }}</h1>
+      <p class="error-body">{{ i18n "notFoundBody" | default "The link may be wrong, or the page has been taken down." }}</p>
+      <div class="error-actions">
+        <a class="btn btn-primary" href="{{ "/" | relLangURL }}">{{ i18n "backHome" | default "Back to home" }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

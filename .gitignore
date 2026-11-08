@@ -1,0 +1,9 @@
+/public/
+/resources/
+.hugo_build.lock
+/exampleSite/public/
+/exampleSite/resources/
+/.check-build/
+/.check-themes/
+/.playwright-mcp/
+.DS_Store

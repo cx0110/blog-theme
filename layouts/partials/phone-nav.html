@@ -1,0 +1,22 @@
+{{- /*
+  手机底部标签栏。形态由 params.theme.phoneNav 决定:
+  bottom-bar(默认)渲染这一条,header / none 都不渲染。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $mode := $theme.phoneNav | default "bottom-bar" -}}
+{{- if eq $mode "bottom-bar" -}}
+{{- with site.Menus.main }}
+<nav class="phone-nav" aria-label="{{ i18n "mainNavigation" | default "Main navigation" }}">
+  <div class="phone-nav-inner" style="grid-template-columns: repeat({{ len . }}, minmax(0, 1fr))">
+    {{- range . }}
+    {{- $url := .URL | relLangURL }}
+    {{- $active := or (eq $.RelPermalink $url) (and (ne $url "/") (hasPrefix $.RelPermalink $url)) }}
+    <a href="{{ $url }}" class="phone-nav-link"{{ if $active }} aria-current="page"{{ end }}>
+      {{ partial "icon.html" (dict "name" (.Params.icon | default "list") "size" 22) }}
+      <span>{{ .Name }}</span>
+    </a>
+    {{- end }}
+  </div>
+</nav>
+{{- end }}
+{{- end -}}

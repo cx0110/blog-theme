@@ -1,0 +1,59 @@
+name = "blog-theme"
+license = "MIT"
+licenses = ["MIT"]
+description = "A general-purpose Hugo blog theme in the visual language of AIHOT: warm paper ground, ink hierarchy, one accent, hairline borders — with runtime-switchable appearance and up/down colour schemes."
+homepage = "https://github.com/cx0110/blog-theme"
+demosite = "https://github.com/cx0110/blog-theme"
+tags = ["blog", "theme", "hugo", "minimal", "dark mode"]
+features = ["blog", "theme", "dark-mode", "i18n", "responsive"]
+min_version = "0.146.0"
+
+[author]
+  name = "cx0110"
+  homepage = "https://github.com/cx0110"
+
+[params]
+  description = "A general-purpose Hugo blog theme."
+
+  [params.theme]
+    # 第 2 层:默认配色方案(aihot / ashare / western / neutral,或自定义)
+    defaultScheme = "aihot"
+    # 第 3 层:默认外观(light / dark / system)
+    defaultAppearance = "system"
+    # 是否显示外观切换器与配色方案切换器
+    showAppearanceSwitcher = true
+    showSchemeSwitcher = true
+    # 手机端导航形态:bottom-bar | header | none
+    phoneNav = "bottom-bar"
+    # 桌面侧栏形态:full | rail | none
+    sidebar = "full"
+
+    # 置顶:默认全部关闭(backToTop 是悬浮按钮,不是置顶)
+    [params.theme.sticky]
+      sidebar = false
+      header = false
+      toc = false
+      backToTop = true
+
+    # 第 1 层:主题自身颜色
+    [params.theme.colors]
+      accent = "#176b75"
+      accentDark = "#12ccd8"
+
+    # 第 2 层:内置配色方案(决定"涨""跌"分别指向哪个颜色)
+    [params.theme.schemes.aihot]
+      label = "AIHOT"
+      up = ["#b3402a", "#d86a52"]
+      down = ["#2f7d5c", "#5fc79a"]
+    [params.theme.schemes.ashare]
+      label = "A 股"
+      up = ["#c0392b", "#e06a5c"]
+      down = ["#2f7d5c", "#5fc79a"]
+    [params.theme.schemes.western]
+      label = "欧美"
+      up = ["#2f7d5c", "#5fc79a"]
+      down = ["#c0392b", "#e06a5c"]
+    [params.theme.schemes.neutral]
+      label = "中性"
+      up = ["#59656b", "#a5b0b3"]
+      down = ["#657176", "#89979d"]

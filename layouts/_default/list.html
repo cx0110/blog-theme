@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="site-main-inner">
+  <header class="page-head">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- with .Description | default (.Content | plainify | truncate 200) }}
+    <p class="page-lead">{{ . }}</p>
+    {{- end }}
+  </header>
+  {{- $pages := .Pages -}}
+  {{- if $pages }}
+  <div class="post-list">
+    {{- range $pages }}
+    {{ partial "post-card.html" . }}
+    {{- end }}
+  </div>
+  {{- else }}
+  <div class="post-list">
+    <p class="post-card-summary">{{ i18n "noPosts" | default "Nothing here yet." }}</p>
+  </div>
+  {{- end }}
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

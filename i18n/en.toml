@@ -1,0 +1,99 @@
+# English UI copy.
+#
+# Two things to know about this file:
+#   * A table may hold `other` (and plural forms) OR sub-tables, not both.
+#     `[appearance]` carries the group label, so the option labels below are
+#     flat dotted keys instead of `[appearance.light]` sub-tables.
+#   * Flat dotted keys must appear before the first table header: in TOML, a
+#     key written after a header belongs to that table.
+
+"appearance.light" = "Light"
+"appearance.dark" = "Dark"
+"appearance.system" = "System"
+
+[appearance]
+other = "Appearance"
+
+[colourScheme]
+other = "Colour scheme"
+
+[mainNavigation]
+other = "Main navigation"
+
+[toc]
+other = "Table of contents"
+
+[readMore]
+other = "Read more"
+
+[postedOn]
+other = "Posted on"
+
+[updatedOn]
+other = "Updated on"
+
+[words]
+other = "{{ .Count }} words"
+
+[readingTime]
+other = "{{ .Count }} min read"
+
+[tags]
+other = "Tags"
+
+[untagged]
+other = "Untagged"
+
+[noPosts]
+other = "Nothing here yet."
+
+[posts]
+other = "posts"
+
+[newer]
+other = "Newer"
+
+[older]
+other = "Older"
+
+[newerPost]
+other = "Newer post"
+
+[olderPost]
+other = "Older post"
+
+[page]
+other = "Page {{ .Current }} of {{ .Total }}"
+
+[pagination]
+other = "Pagination"
+
+[articleNav]
+other = "Article navigation"
+
+[backHome]
+other = "Back to home"
+
+[backToTop]
+other = "Back to top"
+
+[notFoundTitle]
+other = "This page does not exist"
+
+[notFoundBody]
+other = "The link may be wrong, or the page has been taken down."
+
+[skipToContent]
+other = "Skip to content"
+
+[toggleNav]
+other = "Toggle navigation"
+
+[home]
+other = "Home"
+
+[archive]
+other = "Archive"
+
+[poweredBy]
+other = "Powered by {name}"

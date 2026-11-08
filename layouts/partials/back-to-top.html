@@ -1,0 +1,36 @@
+{{- /* 回到顶部:滚动超过一屏后出现。默认开启(params.theme.sticky.backToTop)。 */ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $sticky := $theme.sticky | default dict -}}
+{{- if $sticky.backToTop | default false -}}
+<button type="button" class="back-to-top" id="back-to-top" aria-label="{{ i18n "backToTop" | default "Back to top" }}">
+  {{ partial "icon.html" (dict "name" "arrow-up" "size" 18) }}
+</button>
+<script>
+  (function () {
+    var button = document.getElementById("back-to-top");
+    if (!button) return;
+    var ticking = false;
+    var update = function () {
+      button.classList.toggle("is-visible", window.scrollY > window.innerHeight * 1.2);
+      ticking = false;
+    };
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+    button.addEventListener("click", function () {
+      var reduced = false;
+      try {
+        reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      } catch (e) {}
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+    });
+    update();
+  })();
+</script>
+{{- end -}}

@@ -1,0 +1,9 @@
+{{- /* 提示块:{{< notice type="warn" title="注意" >}}内容{{< /notice >}} */ -}}
+{{- $type := .Get "type" | default "info" -}}
+{{- $title := .Get "title" -}}
+<div class="notice notice-{{ $type }}">
+  {{- with $title }}
+  <div class="notice-title">{{ . }}</div>
+  {{- end }}
+  {{ .Inner | .Page.RenderString (dict "display" "block") }}
+</div>

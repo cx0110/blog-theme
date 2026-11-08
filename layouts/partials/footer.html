@@ -1,0 +1,17 @@
+{{- $year := now.Format "2006" -}}
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div>
+      © {{ $year }} {{ site.Params.author | default site.Title }}
+      {{- with site.Params.license }} · {{ . }}{{ end }}
+    </div>
+    <div class="site-footer-links">
+      {{- with site.Params.github }}
+      <a href="{{ . }}" rel="noopener" target="_blank">GitHub</a>
+      {{- end }}
+      {{- with site.Params.poweredBy }}
+      {{ i18n "poweredBy" | default "Powered by {name}" | replaceRE "{name}" .name | safeHTML }}
+      {{- end }}
+    </div>
+  </div>
+</footer>

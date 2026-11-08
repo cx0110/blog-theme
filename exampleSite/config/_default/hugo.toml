@@ -1,0 +1,70 @@
+baseURL = "https://example.com/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "blog-theme"
+theme = "blog-theme"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 5
+
+[params]
+  description = "A general-purpose Hugo blog theme in the visual language of AIHOT."
+  author = "blog-theme"
+  license = "MIT"
+  github = "https://github.com/cx0110/blog-theme"
+  footer = "Visual language adapted from AIHOT."
+
+  [params.theme]
+    defaultScheme = "aihot"
+    defaultAppearance = "system"
+    showAppearanceSwitcher = true
+    showSchemeSwitcher = true
+    phoneNav = "bottom-bar"
+    sidebar = "full"
+
+    # 示例站把所有置顶都打开,展示主题能力;主题默认是全部关闭的。
+    [params.theme.sticky]
+      sidebar = true
+      header = true
+      toc = true
+      backToTop = true
+
+  # 第 1 层:主题自身颜色。示例站把强调色换成靛蓝。
+  [params.theme.colors]
+    accent = "#3b5bdb"
+    accentDark = "#91a7ff"
+
+  # 站点自定义的配色方案:与内置方案同构,追加即可。
+  [params.theme.schemes.ocean]
+    label = "Ocean"
+    up = ["#0f7b8a", "#3fb6c9"]
+    down = ["#a4512c", "#d99060"]
+
+[[menus.main]]
+  name = "Home"
+  url = "/"
+  weight = 10
+  [menus.main.params]
+    icon = "home"
+
+[[menus.main]]
+  name = "Posts"
+  url = "/posts/"
+  weight = 20
+  [menus.main.params]
+    icon = "file-text"
+
+[[menus.main]]
+  name = "Tags"
+  url = "/tags/"
+  weight = 30
+  [menus.main.params]
+    icon = "tag"
+
+[[menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 40
+  [menus.main.params]
+    icon = "info"

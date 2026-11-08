@@ -1,0 +1,98 @@
+# 中文界面文案。
+#
+# 两点约定:
+#   * 一个表要么只放 `other`(以及复数形式),要么只放子表,不能混用。
+#     `[appearance]` 放的是分组标题,所以下面的选项标题用平铺的点号键,
+#     而不是 `[appearance.light]` 这样的子表。
+#   * 平铺的点号键必须写在第一个表头之前 —— TOML 里写在表头之后的键属于该表。
+
+"appearance.light" = "浅色"
+"appearance.dark" = "深色"
+"appearance.system" = "跟随系统"
+
+[appearance]
+other = "外观"
+
+[colourScheme]
+other = "配色方案"
+
+[mainNavigation]
+other = "主导航"
+
+[toc]
+other = "目录"
+
+[readMore]
+other = "阅读全文"
+
+[postedOn]
+other = "发布于"
+
+[updatedOn]
+other = "更新于"
+
+[words]
+other = "{{ .Count }} 字"
+
+[readingTime]
+other = "阅读约 {{ .Count }} 分钟"
+
+[tags]
+other = "标签"
+
+[untagged]
+other = "未分类"
+
+[noPosts]
+other = "这里还什么都没有。"
+
+[posts]
+other = "篇"
+
+[newer]
+other = "更新"
+
+[older]
+other = "更旧"
+
+[newerPost]
+other = "更新的文章"
+
+[olderPost]
+other = "更早的文章"
+
+[page]
+other = "第 {{ .Current }} 页,共 {{ .Total }} 页"
+
+[pagination]
+other = "分页"
+
+[articleNav]
+other = "文章导航"
+
+[backHome]
+other = "回到首页"
+
+[backToTop]
+other = "回到顶部"
+
+[notFoundTitle]
+other = "这个页面不存在"
+
+[notFoundBody]
+other = "链接可能有误,或者页面已被移除。"
+
+[skipToContent]
+other = "跳到主内容"
+
+[toggleNav]
+other = "切换导航"
+
+[home]
+other = "首页"
+
+[archive]
+other = "归档"
+
+[poweredBy]
+other = "由 {name} 强力驱动"

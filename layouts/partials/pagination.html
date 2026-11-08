@@ -1,0 +1,17 @@
+{{- /* 分页:上一页 / 页码 / 下一页 */ -}}
+{{- $paginator := .Paginator -}}
+{{- if gt $paginator.TotalPages 1 -}}
+<nav class="pagination" aria-label="{{ i18n "pagination" | default "Pagination" }}">
+  {{- with $paginator.Prev }}
+  <a class="pagination-link" href="{{ .URL }}" rel="prev">← {{ i18n "newer" | default "Newer" }}</a>
+  {{- else }}
+  <span></span>
+  {{- end }}
+  <span class="pagination-status">{{ i18n "page" (dict "Current" $paginator.PageNumber "Total" $paginator.TotalPages) }}</span>
+  {{- with $paginator.Next }}
+  <a class="pagination-link" href="{{ .URL }}" rel="next">{{ i18n "older" | default "Older" }} →</a>
+  {{- else }}
+  <span></span>
+  {{- end }}
+</nav>
+{{- end -}}

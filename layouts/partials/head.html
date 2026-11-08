@@ -1,0 +1,42 @@
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) -}}
+{{- $description := .Description | default site.Params.description -}}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf9f6" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#13191c" />
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}" />
+{{- with .Params.author | default site.Params.author }}
+<meta name="author" content="{{ if reflect.IsSlice . }}{{ delimit . ", " }}{{ else }}{{ . }}{{ end }}" />
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}" />
+{{- range .AlternativeOutputFormats }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}" />
+{{- end }}
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml" />
+{{- $css := resources.Get "css/theme.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+{{- /* 站点自建 assets/css/custom.css 时才引入,用来覆盖主题令牌。 */}}
+{{- with resources.Get "css/custom.css" }}
+{{- $custom := . | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}" />
+{{- end }}
+{{- /* 首屏前跑一段同步脚本:按读者上次的偏好定好深浅与配色方案,避免闪白。 */}}
+<script>
+  (function () {
+    var a = null, s = null;
+    try {
+      a = localStorage.getItem("blog-theme:appearance");
+      s = localStorage.getItem("blog-theme:scheme");
+    } catch (e) {}
+    var t = (a === "light" || a === "dark")
+      ? a
+      : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var r = document.documentElement;
+    r.setAttribute("data-theme", t);
+    if (s) r.setAttribute("data-scheme", s);
+  })();
+</script>
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}" />
+{{- end }}

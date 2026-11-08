@@ -1,0 +1,14 @@
+{{- /*
+  文章目录。置顶由 params.theme.sticky.toc 决定,默认关闭。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $sticky := $theme.sticky | default dict -}}
+{{- with .TableOfContents -}}
+{{- if ne (trim (. | plainify) " \n\r\t") "" }}
+<aside class="article-aside">
+  <nav class="toc{{ if $sticky.toc }} is-sticky{{ end }}" aria-label="{{ i18n "toc" | default "Table of contents" }}">
+    <div class="toc-inner">{{ . }}</div>
+  </nav>
+</aside>
+{{- end -}}
+{{- end -}}

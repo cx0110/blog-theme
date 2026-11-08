@@ -1,0 +1,35 @@
+{{- /*
+  桌面侧栏。窄屏(700–940px)收成图标导轨,宽屏展开成完整侧栏。
+  置顶由 params.theme.sticky.sidebar 决定,默认关闭。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $sticky := $theme.sticky | default dict -}}
+{{- $mode := $theme.sidebar | default "full" -}}
+{{- if ne $mode "none" -}}
+<aside class="site-sidebar{{ if $sticky.sidebar }} is-sticky{{ end }}">
+  <a href="{{ "/" | relURL }}" class="sidebar-brand" aria-label="{{ site.Title }}">
+    <span class="brand-dot" aria-hidden="true"></span>
+    <span class="sidebar-label sidebar-brand-name">{{ site.Title }}</span>
+  </a>
+
+  {{- with site.Menus.main }}
+  <nav class="sidebar-nav" aria-label="{{ i18n "mainNavigation" | default "Main navigation" }}">
+    {{- range . }}
+    {{- $url := .URL | relLangURL }}
+    {{- $active := or (eq $.RelPermalink $url) (and (ne $url "/") (hasPrefix $.RelPermalink $url)) }}
+    <a href="{{ $url }}" class="sidebar-link"{{ if $active }} aria-current="page"{{ end }}>
+      <span class="sidebar-link-icon">{{ partial "icon.html" (dict "name" (.Params.icon | default "list") "size" 17) }}</span>
+      <span class="sidebar-label">{{ .Name }}</span>
+    </a>
+    {{- end }}
+  </nav>
+  {{- end }}
+
+  <div class="sidebar-footer">
+    {{ partial "scheme-switcher.html" . }}
+    {{- with site.Params.footer }}
+    <div class="sidebar-footer-text">{{ . }}</div>
+    {{- end }}
+  </div>
+</aside>
+{{- end -}}

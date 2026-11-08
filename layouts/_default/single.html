@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{- $dateFormat := site.Params.dateFormat | default "Jan 2, 2006" -}}
+<div class="site-main-inner reading">
+  <article class="article">
+    <header class="article-head">
+      <h1 class="article-title">{{ .Title }}</h1>
+      {{- with .Description }}
+      <p class="page-lead">{{ . }}</p>
+      {{- end }}
+      <div class="post-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format $dateFormat }}</time>
+        {{- with .ReadingTime }}
+        <span class="post-meta-sep" aria-hidden="true"></span>
+        <span>{{ i18n "readingTime" . }}</span>
+        {{- end }}
+        {{- with .WordCount }}
+        <span class="post-meta-sep" aria-hidden="true"></span>
+        <span>{{ i18n "words" . }}</span>
+        {{- end }}
+        {{- with .Lastmod }}
+        {{- if ne (.Format "2006-01-02") ($.Date.Format "2006-01-02") }}
+        <span class="post-meta-sep" aria-hidden="true"></span>
+        <span>{{ i18n "updatedOn" | default "Updated on" }} {{ . | time.Format $dateFormat }}</span>
+        {{- end }}
+        {{- end }}
+      </div>
+      {{- with .GetTerms "tags" }}
+      <div class="post-tags">
+        {{- range . }}
+        <a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+        {{- end }}
+      </div>
+      {{- end }}
+    </header>
+
+    <div class="article-layout">
+      <div class="article-body prose">
+        {{ .Content }}
+      </div>
+      {{ partial "toc.html" . }}
+    </div>
+
+    {{- if or .Prev .Next }}
+    <nav class="article-nav" aria-label="{{ i18n "articleNav" | default "Article navigation" }}">
+      {{- with .Prev }}
+      <a class="article-nav-link" href="{{ .RelPermalink }}">
+        <span class="article-nav-label">{{ i18n "olderPost" | default "Older post" }}</span>
+        <span class="article-nav-title">{{ .Title }}</span>
+      </a>
+      {{- else }}
+      <span></span>
+      {{- end }}
+      {{- with .Next }}
+      <a class="article-nav-link article-nav-next" href="{{ .RelPermalink }}">
+        <span class="article-nav-label">{{ i18n "newerPost" | default "Newer post" }}</span>
+        <span class="article-nav-title">{{ .Title }}</span>
+      </a>
+      {{- else }}
+      <span></span>
+      {{- end }}
+    </nav>
+    {{- end }}
+  </article>
+</div>
+{{ end }}

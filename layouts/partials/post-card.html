@@ -1,0 +1,25 @@
+{{- $dateFormat := site.Params.dateFormat | default "Jan 2, 2006" -}}
+<article class="post-card card card-hover">
+  <h2 class="post-card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  {{- with .Summary | plainify | truncate 180 }}
+  <p class="post-card-summary">{{ . }}</p>
+  {{- end }}
+  <div class="post-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format $dateFormat }}</time>
+    {{- with .ReadingTime }}
+    <span class="post-meta-sep" aria-hidden="true"></span>
+    <span>{{ i18n "readingTime" . }}</span>
+    {{- end }}
+    {{- with .GetTerms "tags" }}
+    <span class="post-meta-sep" aria-hidden="true"></span>
+    <span>{{ i18n "tags" | default "Tags" }}</span>
+    {{- end }}
+  </div>
+  {{- with .GetTerms "tags" }}
+  <div class="post-tags">
+    {{- range . }}
+    <a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- end }}
+  </div>
+  {{- end }}
+</article>

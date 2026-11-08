@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="site-main-inner">
+  <header class="page-head">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- with .Content }}
+    <div class="page-lead prose">{{ . }}</div>
+    {{- end }}
+  </header>
+  {{- $terms := .Data.Terms.ByCount }}
+  {{- if $terms }}
+  <div class="term-list">
+    {{- range $terms }}
+    <a class="term-card card card-hover" href="{{ .Page.RelPermalink }}">
+      <span class="term-card-name">{{ .Page.LinkTitle }}</span>
+      <span class="term-card-count">{{ .Count }} {{ i18n "posts" | default "posts" }}</span>
+    </a>
+    {{- end }}
+  </div>
+  {{- else }}
+  <p class="post-card-summary">{{ i18n "noPosts" | default "Nothing here yet." }}</p>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,47 @@
+{{- /*
+  外观与配色方案切换器。两组单选:外观(浅色/深色/跟随系统)与配色方案。
+  配色方案列表来自 params.theme.schemes,和 appearance-vars.html 用的是同一份配置。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $schemes := $theme.schemes | default dict -}}
+{{- $showAppearance := $theme.showAppearanceSwitcher | default false -}}
+{{- $showScheme := $theme.showSchemeSwitcher | default false -}}
+{{- if or $showAppearance $showScheme -}}
+<details class="scheme-switcher">
+  <summary class="scheme-switcher-summary" aria-label="{{ i18n "appearance" | default "Appearance" }}">
+    {{ partial "icon.html" (dict "name" "palette" "size" 15) }}
+  </summary>
+  <div class="scheme-switcher-panel">
+    {{- if $showAppearance }}
+    <div class="scheme-switcher-group" role="radiogroup" aria-label="{{ i18n "appearance" | default "Appearance" }}">
+      {{- range $key, $value := dict "light" "light" "dark" "dark" "system" "system" }}
+      <button
+        type="button"
+        role="radio"
+        aria-checked="false"
+        data-appearance-set="{{ $value }}"
+        class="scheme-switcher-option"
+      >
+        <span>{{ i18n (printf "appearance.%s" $key) | default $key }}</span>
+      </button>
+      {{- end }}
+    </div>
+    {{- end }}
+    {{- if $showScheme }}
+    <div class="scheme-switcher-group" role="radiogroup" aria-label="{{ i18n "colourScheme" | default "Colour scheme" }}">
+      {{- range $name, $scheme := $schemes }}
+      <button
+        type="button"
+        role="radio"
+        aria-checked="false"
+        data-scheme-set="{{ $name }}"
+        class="scheme-switcher-option"
+      >
+        <span>{{ $scheme.label | default $name }}</span>
+      </button>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+</details>
+{{- end -}}

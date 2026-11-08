@@ -1,0 +1,8 @@
+{{- /*
+  小徽标。type 决定语气,可选:
+  neutral(默认) / accent / hot / amber / ok / up / down
+  用法:{{< badge type="up" text="+2.31%" >}}
+*/ -}}
+{{- $type := .Get "type" | default "neutral" -}}
+{{- $text := .Get "text" | default (.Get 0) -}}
+<span class="badge badge-{{ $type }}">{{ $text }}</span>

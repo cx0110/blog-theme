@@ -1,0 +1,13 @@
+{{- /*
+  顶栏。手机端显示(桌面端侧栏里已有站名和切换器)。
+  置顶由 params.theme.sticky.header 决定,默认关闭。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $sticky := $theme.sticky | default dict -}}
+<header class="site-header{{ if $sticky.header }} is-sticky{{ end }}">
+  <a href="{{ "/" | relLangURL }}" class="site-header-brand">
+    <span class="brand-dot" aria-hidden="true"></span>
+    <span>{{ site.Title }}</span>
+  </a>
+  {{ partial "scheme-switcher.html" . }}
+</header>

@@ -1,0 +1,32 @@
+{{- /*
+  页面骨架。外观与配色方案写在 <html> 的 data-theme / data-scheme 上,
+  首屏前的内联脚本会按读者的选择改写它们(见 head.html)。
+*/ -}}
+{{- $theme := site.Params.theme | default dict -}}
+{{- $appearance := $theme.defaultAppearance | default "system" -}}
+{{- $dataTheme := cond (eq $appearance "dark") "dark" "light" -}}
+{{- $dataScheme := $theme.defaultScheme | default "aihot" -}}
+{{- $sidebarMode := $theme.sidebar | default "full" -}}
+<!DOCTYPE html>
+<html lang="{{ or site.Language.LanguageCode site.Language.Lang }}" data-theme="{{ $dataTheme }}" data-scheme="{{ $dataScheme }}">
+  <head>
+    {{ partial "head.html" . }}
+    {{ partial "appearance-vars.html" . }}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{{ i18n "skipToContent" | default "Skip to content" }}</a>
+    <div class="site-shell" data-sidebar="{{ $sidebarMode }}">
+      {{ partial "sidebar.html" . }}
+      <div class="site-body">
+        {{ partial "header.html" . }}
+        <main id="main" class="site-main">
+          {{ block "main" . }}{{ end }}
+        </main>
+        {{ partial "footer.html" . }}
+      </div>
+      {{ partial "phone-nav.html" . }}
+    </div>
+    {{ partial "back-to-top.html" . }}
+    {{ partial "scripts.html" . }}
+  </body>
+</html>
